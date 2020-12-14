@@ -7,21 +7,21 @@ Number.prototype.toRadians = function() {
 function distanceFromGrenoble(city)
 {
 
-  var GrenobleLat = 45.166667;
-  var GrenobleLong = 5.716667;
+  const GrenobleLat = 45.166667;
+  const GrenobleLong = 5.716667;
 
-  const R = 6371e3; // metres
-  const φ1 = GrenobleLat * Math.PI/180; // φ, λ in radians
-  const φ2 = city.latitude * Math.PI/180;
-  const Δφ = (city.latitude-GrenobleLat) * Math.PI/180;
-  const Δλ = (city.longitude-GrenobleLong) * Math.PI/180;
+  const R = 6371;
+  const φ1 = GrenobleLat.toRadians(); // φ, λ in radians
+  const φ2 = Number(city.latitude).toRadians();
+  const Δφ = (Number(city.latitude)-GrenobleLat).toRadians();
+  const Δλ = (Number(city.longitude)-GrenobleLong).toRadians();
 
   const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
             Math.cos(φ1) * Math.cos(φ2) *
             Math.sin(Δλ/2) * Math.sin(Δλ/2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-  return R * c; // in metres
+  return R * c;
 }
 
 // Swap 2 values in array csvData
@@ -30,8 +30,9 @@ function distanceFromGrenoble(city)
 function swap(i,j)
 {
   displayBuffer.push(['swap', i, j]); // Do not delete this line (for display)
-  console.log("swap - implement me !");
-
+  let a = csvData[i];
+  csvData[i] = csvData[j];
+  csvData[j] = a;
 }
 
 // Returns true if city with index i in csvData is closer to Grenoble than city with index j
@@ -40,7 +41,7 @@ function swap(i,j)
 function isLess(i, j)
 {
   displayBuffer.push(['compare', i, j]); // Do not delete this line (for display)
-  console.log("isLess - implement me !");
+  return(csvData[i].dist < csvData[j].dist)
 }
 
 
